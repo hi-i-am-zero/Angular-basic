@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderLayoutComponent } from "./shared/header-layout/header-layout.component";
-import { createWebRequestFromNodeRequest } from '@angular/ssr/node';
-import { cwd } from 'process';
-
+import { FormsModule } from '@angular/forms'
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderLayoutComponent],
+  imports: [RouterOutlet, HeaderLayoutComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -15,6 +13,8 @@ export class AppComponent {
   nameBtn = 'Click Me!';
 
   clickMessage = '';
+
+  bindingMessage = '';
 
   handleClickMe(): void {
     this.clickMessage = 'Click Me Hello World';
