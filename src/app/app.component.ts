@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderLayoutComponent } from "./shared/header-layout/header-layout.component";
+import { createWebRequestFromNodeRequest } from '@angular/ssr/node';
+import { cwd } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +12,15 @@ import { HeaderLayoutComponent } from "./shared/header-layout/header-layout.comp
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  //text
-  title = {
-    name: 'Nine',
-    old: 2025
-  };
+  nameBtn = 'Click Me!';
 
-  //properties
-  isDisable = false;
+  clickMessage = '';
 
-  //atributes
-  contentImage = 'Nine Welcome';
+  handleClickMe(): void {
+    this.clickMessage = 'Click Me Hello World';
+  }
+
+  updateField(): void {
+    console.log('Hello World');
+  }
 }

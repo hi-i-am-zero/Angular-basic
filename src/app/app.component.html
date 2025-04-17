@@ -9,11 +9,11 @@
 
 <main class="main">
     <header-layout/>
-    <div>{{ title.name }}</div> 
-    <div>{{ title.old + 2026}}</div> 
+    
+    <h1> Click is an event</h1>
+    <button (click)="handleClickMe()">{{ nameBtn }}</button>
 
-    <button [disabled]="isDisable">Hello World</button>
-
-    <img src="assets/images/shopping-cart.png" alt="Logo {{ contentImage }}">
+    <div>{{ clickMessage }}</div>
+    <input type="text" (keyup)="updateField()">
 </main>
 <router-outlet />
