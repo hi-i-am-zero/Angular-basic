@@ -10,5 +10,15 @@ import { HeaderLayoutComponent } from "./shared/header-layout/header-layout.comp
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'angular-basic-project';
+  //text
+  title = {
+    name: 'Nine',
+    old: 2025
+  };
+
+  //properties
+  isDisable = false;
+
+  //atributes
+  contentImage = 'Nine Welcome';
 }

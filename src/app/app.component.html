@@ -8,6 +8,12 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <main class="main">
-    <header-layout></header-layout>  
+    <header-layout/>
+    <div>{{ title.name }}</div> 
+    <div>{{ title.old + 2026}}</div> 
+
+    <button [disabled]="isDisable">Hello World</button>
+
+    <img src="assets/images/shopping-cart.png" alt="Logo {{ contentImage }}">
 </main>
 <router-outlet />
