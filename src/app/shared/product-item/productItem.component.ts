@@ -26,7 +26,17 @@ import { EventEmitter } from "@angular/core";
 })
 export class ProductItemComponent {
   @Input() products: ProductItems[] = [];
+
   @Output() dataEvent = new EventEmitter<number>();
+
+  get totalPrice(): number {
+    const sum = this.products.reduce((total, item) => {
+      return total + item.price;
+    }, 0);
+
+    return sum;
+  }
+
   handleDelete = (id: number) => {
     this.dataEvent.emit(id);
   }
