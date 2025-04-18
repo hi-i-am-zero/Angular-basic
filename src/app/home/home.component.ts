@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderLayoutComponent } from "../shared/header-layout/header-layout.component";
 import { FormsModule } from '@angular/forms'
@@ -12,12 +12,13 @@ import { ProductItemComponent } from "../shared/product-item/productItem.compone
   standalone: true,
   imports: [
     RouterOutlet,
-    ProductItemComponent
+    ProductItemComponent,
+    NgIf,
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, DoCheck {
   nameBtn = 'Click Me!';
 
   clickMessage = '';
@@ -25,7 +26,7 @@ export class HomeComponent {
   bindingMessage = '';
 
   // isActive = true;
-  isVisible = false;
+  isVisible = true;
 
   products: ProductItems[] = [
     { id: 1, name: 'samba og', price: 400000, image: 'assets/images/giay-nike.jpg' },
@@ -34,15 +35,36 @@ export class HomeComponent {
     { id: 4, name: 'mlb f3', price: 700000, image: 'assets/images/giay-nike.jpg' },
   ];
 
+  constructor(){
+    console.log('Initalize Component');
+  }
+
+  ngOnInit(): void {
+    console.log('Initialized Component');
+    // fetch('https://jsonplaceholder.typicode.com/todos/1')
+    //   .then(response => response.json())
+    //   .then(json => console.log(json))
+  }
+
+  ngDoCheck(): void {
+    console.log('Check Component');
+  }
+
   handleClickMe(): void {
     this.clickMessage = 'Click Me Hello World';
   }
   handleDelete = (id: number) => {
-    const productIndex = this.products.findIndex(item => item.id == id);
-    if (productIndex !== -1) {
-      this.products.splice(productIndex, 1);
-    }
+    // const productIndex = this.products.findIndex((item) => item.id == id);
+    // if (productIndex !== -1) {
+    //   this.products.splice(productIndex, 1);
+    // }
+    this.products = this.products.filter((item) => item.id !== id)
   }
+
+  handleChangeVisible = () => {
+    this.isVisible = false;
+  }
+
   updateField(): void {
     console.log('Hello World');
   }

@@ -4,6 +4,9 @@
 
   <!-- <div *ngIf="isVisible">Hello World</div> -->
 
+  <div *ngIf="isVisible">
+    <app-product-item [products]="products" (dataEvent)="handleDelete($event)"></app-product-item>
+  </div>
 
-  <app-product-item [products]="products" (dataEvent)="handleDelete($event)"></app-product-item>
+  <button (click)="handleChangeVisible()">Ok</button>
 </div>

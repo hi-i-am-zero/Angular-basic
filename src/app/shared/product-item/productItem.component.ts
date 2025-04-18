@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, Input, Output } from "@angular/core";
+import { Component, Input, OnChanges, OnDestroy, Output, SimpleChanges } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterOutlet, RouterLink } from "@angular/router";
 import { ProductItems } from "../types/productItem";
@@ -24,7 +24,7 @@ import { EventEmitter } from "@angular/core";
   templateUrl: './productItem.component.html',
   styleUrl: './productItem.component.scss'
 })
-export class ProductItemComponent {
+export class ProductItemComponent implements OnChanges, OnDestroy {
   @Input() products: ProductItems[] = [];
 
   @Output() dataEvent = new EventEmitter<number>();
@@ -35,6 +35,15 @@ export class ProductItemComponent {
     }, 0);
 
     return sum;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes['products'].currentValue);
+    console.log(changes['products'].previousValue);
+  }
+
+  ngOnDestroy(): void {
+    console.log('Component is removed');
   }
 
   handleDelete = (id: number) => {
