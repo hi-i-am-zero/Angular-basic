@@ -7,6 +7,7 @@ import { UpperCasePipe } from '../shared/pipes/UpperCasePipe.pipe';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ProductItems } from '../shared/types/productItem';
 import { ProductItemComponent } from "../shared/product-item/productItem.component";
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,7 +19,8 @@ import { ProductItemComponent } from "../shared/product-item/productItem.compone
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, DoCheck {
+// export class HomeComponent implements OnInit, DoCheck {
+export class HomeComponent implements OnInit{
   nameBtn = 'Click Me!';
 
   clickMessage = '';
@@ -35,8 +37,19 @@ export class HomeComponent implements OnInit, DoCheck {
     { id: 4, name: 'mlb f3', price: 700000, image: 'assets/images/giay-nike.jpg' },
   ];
 
-  constructor(){
+  constructor(private http: HttpClient){
     console.log('Initalize Component');
+    this.http.get<any>('https://ninedev-api.vercel.app/blogs')
+    .subscribe(({ data, message }) => {
+      this.products = data.map((item: any) => {
+        return {
+          ...item,
+          name: item.title,
+          price: Number(item.body),
+          image: 'assets/images/giay-nike.jpg',
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -46,9 +59,9 @@ export class HomeComponent implements OnInit, DoCheck {
     //   .then(json => console.log(json))
   }
 
-  ngDoCheck(): void {
-    console.log('Check Component');
-  }
+  // ngDoCheck(): void {
+  //   console.log('Check Component');
+  // }
 
   handleClickMe(): void {
     this.clickMessage = 'Click Me Hello World';
