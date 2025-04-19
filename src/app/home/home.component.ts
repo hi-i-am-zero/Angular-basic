@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 import { BlogService } from './../../services/BlogService';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -9,6 +10,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ProductItems } from '../shared/types/productItem';
 import { ProductItemComponent } from "../shared/product-item/productItem.component";
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -21,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './home.component.scss'
 })
 // export class HomeComponent implements OnInit, DoCheck {
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, OnDestroy{
   nameBtn = 'Click Me!';
 
   clickMessage = '';
@@ -30,21 +32,45 @@ export class HomeComponent implements OnInit{
 
   // isActive = true;
   isVisible = true;
+  
+  getBlogApi: Subscription;
+
+
 
   products: ProductItems[] = [
-    { id: 1, name: 'samba og', price: 400000, image: 'assets/images/giay-nike.jpg' },
-    { id: 2, name: 'nike f1', price: 500000, image: 'assets/images/giay-nike.jpg' },
-    { id: 3, name: 'adidas f2', price: 600000, image: 'assets/images/giay-nike.jpg' },
-    { id: 4, name: 'mlb f3', price: 700000, image: 'assets/images/giay-nike.jpg' },
+    {
+        id: 1,
+        name: 'samba og', 
+        price: 400000, 
+        image: 'assets/images/giay-nike.jpg' 
+      },
+    { 
+      id: 2, 
+      name: 'nike f1', 
+      price: 500000, 
+      image: 'assets/images/giay-nike.jpg' 
+    },
+    { 
+      id: 3, 
+      name: 'adidas f2', 
+      price: 600000, 
+      image: 'assets/images/giay-nike.jpg' 
+    },
+    { 
+      id: 4, 
+      name: 'mlb f3', 
+      price: 700000, 
+      image: 'assets/images/giay-nike.jpg' 
+    },
   ];
 
   constructor(private blogService : BlogService){
     console.log('Initalize Component');
+    this.getBlogApi = new Subscription();
   }
 
   ngOnInit(): void {
-    console.log('Initialized Component');
-    this.blogService.getBlogs()
+    this.getBlogApi = this.blogService.getBlogs()
     .subscribe(({ data, message }) => {
       this.products = data.map((item: any) => {
         return {
@@ -58,6 +84,13 @@ export class HomeComponent implements OnInit{
     // fetch('https://jsonplaceholder.typicode.com/todos/1')
     //   .then(response => response.json())
     //   .then(json => console.log(json))
+  }
+
+  ngOnDestroy(): void {
+      if(this.getBlogApi){
+        this.getBlogApi.unsubscribe();
+        console.log('getBlogApi unsubscribed')
+      }
   }
 
   // ngDoCheck(): void {
