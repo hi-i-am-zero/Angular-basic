@@ -1,3 +1,4 @@
+import { BlogService } from './../../services/BlogService';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderLayoutComponent } from "../shared/header-layout/header-layout.component";
@@ -37,9 +38,13 @@ export class HomeComponent implements OnInit{
     { id: 4, name: 'mlb f3', price: 700000, image: 'assets/images/giay-nike.jpg' },
   ];
 
-  constructor(private http: HttpClient){
+  constructor(private blogService : BlogService){
     console.log('Initalize Component');
-    this.http.get<any>('https://ninedev-api.vercel.app/blogs')
+  }
+
+  ngOnInit(): void {
+    console.log('Initialized Component');
+    this.blogService.getBlogs()
     .subscribe(({ data, message }) => {
       this.products = data.map((item: any) => {
         return {
@@ -50,10 +55,6 @@ export class HomeComponent implements OnInit{
         }
       });
     });
-  }
-
-  ngOnInit(): void {
-    console.log('Initialized Component');
     // fetch('https://jsonplaceholder.typicode.com/todos/1')
     //   .then(response => response.json())
     //   .then(json => console.log(json))
