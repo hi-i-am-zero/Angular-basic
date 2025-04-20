@@ -1,4 +1,4 @@
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BlogService } from '../../services/BlogService';
 import { ProductItems } from '../shared/types/productItem';
 import { Component, OnInit } from '@angular/core';
@@ -11,13 +11,24 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
-  name = new FormControl('');
-  price = new FormControl('');
+  product = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(''),
+    
+  })
+
+  get name(){
+    return this.product.get('name');
+  }
+  
+  get price(){
+    return this.product.get('price');
+  }
 
   constructor(private blogService: BlogService) {}
 
   handleAddCart() {
-    console.log(this.name.value);
-    console.log(this.price.value);
+    console.log(this.name?.value);
+    console.log(this.price?.value);
   }
 }
