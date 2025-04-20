@@ -1,1 +1,10 @@
-<h2>Detail Product {{ id }}</h2>
+<div class="wrapper-cart">
+    <!-- <h1 [ngClass]="{'active': isActive}">Shopping Cart</h1> -->
+    <h1>Details Product</h1>
+    
+    <div style="padding: 0 3rem;">
+        <img src="{{ productItem.image }}" alt="Nine" width="100%" height="auto">
+        <h3>Nem product: {{ productItem.name }}</h3>
+        <h4>Price product: {{ productItem.price }}</h4>
+    </div>
+</div>
